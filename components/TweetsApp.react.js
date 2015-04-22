@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react');
-var Tweets = require('./Tweets.react.js');
+var Comments = require('./Comments.react.js');
 var Loader = require('./Loader.react.js');
 var NotificationBar = require('./NotificationBar.react.js');
 
@@ -9,10 +9,10 @@ var NotificationBar = require('./NotificationBar.react.js');
 module.exports = TweetsApp = React.createClass({
 
   // Method to add a tweet to our timeline
-  addTweet: function(tweet){
+  addTweet: function(comment){
 
     // Get current application state
-    var updated = this.state.tweets;
+    var updated = this.state.comments;
 
     // Increment the unread count
     var count = this.state.count + 1;
@@ -21,10 +21,10 @@ module.exports = TweetsApp = React.createClass({
     var skip = this.state.skip + 1;
 
     // Add tweet to the beginning of the tweets array
-    updated.unshift(tweet);
+    updated.unshift(comment);
 
     // Set application state
-    this.setState({tweets: updated, count: count, skip: skip});
+    this.setState({comments: updated, count: count, skip: skip});
 
   },
 
@@ -59,33 +59,33 @@ module.exports = TweetsApp = React.createClass({
   showNewTweets: function(){
 
     // Get current application state
-    var updated = this.state.tweets;
+    var updated = this.state.comments;
 
     // Mark our tweets active
-    updated.forEach(function(tweet){
-      tweet.active = true;
+    updated.forEach(function(comment){
+      comment.active = true;
     });
 
     // Set application state (active tweets + reset unread count)
-    this.setState({tweets: updated, count: 0});
+    this.setState({comments: updated, count: 0});
 
   },
 
   // Method to load tweets fetched from the server
-  loadPagedTweets: function(tweets){
+  loadPagedTweets: function(comments){
 
     // So meta lol
     var self = this;
 
     // If we still have tweets...
-    if(tweets.length > 0) {
+    if(comments.length > 0) {
 
       // Get current application state
-      var updated = this.state.tweets;
+      var updated = this.state.comments;
 
       // Push them onto the end of the current tweets array
-      tweets.forEach(function(tweet){
-        updated.push(tweet);
+      comments.forEach(function(comment){
+        updated.push(comment);
       });
 
       // This app is so fast, I actually use a timeout for dramatic effect
@@ -93,7 +93,7 @@ module.exports = TweetsApp = React.createClass({
       setTimeout(function(){
 
         // Set application state (Not paging, add tweets)
-        self.setState({tweets: updated, paging: false});
+        self.setState({comments: updated, paging: false});
 
       }, 1000);
 
@@ -132,7 +132,7 @@ module.exports = TweetsApp = React.createClass({
 
     // Set initial application state using props
     return {
-      tweets: props.tweets,
+      comments: props.comments,
       count: 0,
       page: 0,
       paging: false,
@@ -173,7 +173,8 @@ module.exports = TweetsApp = React.createClass({
 
     return (
       <div className="tweets-app">
-        <Tweets tweets={this.state.tweets} />
+        <Header show={this.state.show} episode={this.state.episode} />
+        <Comments comments={this.state.comments} />
         <Loader paging={this.state.paging}/>
         <NotificationBar count={this.state.count} onShowNewTweets={this.showNewTweets}/>
       </div>

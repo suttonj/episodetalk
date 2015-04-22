@@ -8,6 +8,6 @@ var initialState = JSON.parse(document.getElementById('initial-state').innerHTML
 
 // Render the components, picking up where react left off on the server
 React.renderComponent(
-  <TweetsApp tweets={initialState}/>,
+  <TweetsApp comments={initialState}/>,
   document.getElementById('react-app')
 );

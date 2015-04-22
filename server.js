@@ -6,11 +6,12 @@ var express = require('express'),
   twitter = require('twitter'),
   routes = require('./routes'),
   config = require('./config'),
-  streamHandler = require('./utils/streamHandler');
+  streamHandler = require('./utils/streamHandler'),
+  reddit = require('./utils/redditApi.js');
 
 // Create an express instance and set a port variable
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 
 // Set handlebars as the templating engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main'}));
@@ -20,7 +21,7 @@ app.set('view engine', 'handlebars');
 app.disable('etag');
 
 // Connect to our mongo database
-mongoose.connect('mongodb://node:nodenode@proximus.modulusmongo.net:27017/orajY4ta');
+mongoose.connect(config.db);
 
 // Create a new ntwitter instance
 var twit = new twitter(config.twitter);
@@ -41,6 +42,9 @@ var server = http.createServer(app).listen(port, function() {
 
 // Initialize socket.io
 var io = require('socket.io').listen(server);
+
+reddit.clearSubreddit("gameofthrones");
+reddit.getSubreddit("gameofthrones");
 
 // Set a stream listener for tweets matching tracking keywords
 twit.stream('statuses/filter',{ track: 'javascript'}, function(stream){

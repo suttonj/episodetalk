@@ -1,7 +1,7 @@
 {
-  "name": "react-isomorph",
-  "version": "0.0.0",
-  "description": "Isomorphic React Example",
+  "name": "episode-talk",
+  "version": "0.0.1",
+  "description": "TV Episode discussion",
   "main": "app.js",
   "scripts": {
     "watch": "watchify app.js -o public/js/bundle.js -v",
@@ -9,16 +9,17 @@
     "build": "npm run browserify ",
     "start": "npm install"
   },
-  "author": "Ken Wheeler",
-  "license": "MIT",
+  "author": "Jeremy Sutton",
   "dependencies": {
     "express": "~4.9.7",
     "express-handlebars": "~1.1.0",
     "mongoose": "^3.8.23",
     "node-jsx": "~0.11.0",
-    "twitter": "^1.2.0",
     "react": "~0.11.2",
-    "socket.io": "^1.1.0"
+    "request": "^2.55.0",
+    "snoocore": "^2.7.4",
+    "socket.io": "^1.1.0",
+    "twitter": "^1.2.0"
   },
   "devDependencies": {
     "browserify": "~6.0.3",
